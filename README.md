@@ -82,33 +82,40 @@ sudo ln -s /usr/local/lib/python2.7/dist-packages/cv2.so cv2.so
 
 ## To work with ROS Indigo
 To recompile cv_bridge so as to make it fit with OpenCV 3.1, do the following commands:
+
 ```bash
+cd ~/Downloads
+git clone https://github.com/ros-perception/vision_opencv.git
+cd vision_opencv
 mkdir -p ~/catkin_cv/src
 cd ~/catkin_cv/src
 catkin_init_workspace
-cd ~/catkin_cv/
-catkin_make
-gedit ~/.bashrc
+cp -rf cv_bridge ~/catkin_cv/src
+mv cv_bridge cv_bridge_new
+cd cv_bridge_new
+gedit CMakeLists.txt
 ```
-Modify ~/.bashrc to make it contain these lines (order matters here):
+in CMakeLists.txt, change the project name `project(cv_bridge)` into `project(cv_bridge_new)`, save it.
+```bash
+gedit package.xml
+```
+In package.xml, change the second line into `<name>cv_bridge_new</name>`, save it.
+```bash
+cd ..
+cd ..
+catkin_make
+```
+Modify ~/.bashrc to make it contain these lines:
 ```
 source /opt/ros/indigo/setup.bash
-source /home/chentao/catkin_ws/devel/setup.bash
 source /home/chentao/catkin_cv/devel/setup.bash
+source /home/chentao/catkin_ws/devel/setup.bash
 ```
 
-```
-cd ~/catkin_cv
-git clone https://github.com/ros-perception/vision_opencv.git
-git clone  https://github.com/ros-perception/image_pipeline.git
-```
-`image_pipeline` is optional. You need to recompile the packages in `image_pipeline` if you want to use them with the recompiled cv_bridge.
+When you want to use cv_bridge in the future, use cv_bridge_new package instead,
+just add `cv_bridge_new` inside `find_package` in CMakeLists.txt in your project, 
+and add ```#include <cv_bridge/cv_bridge.h>```  in your cpp file.
 
-Copy the `cv_bridge` in the downloaded `vision_opencv` folder and all the packages except `camera_calibration`  in `image_pipeline` (optional) to ~/catkin_cv_src.
-```
-cd ~/catkin_cv
-catkin_make
-```
 
 
 
