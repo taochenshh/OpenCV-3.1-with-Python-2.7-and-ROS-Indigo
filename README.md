@@ -117,6 +117,10 @@ just add `cv_bridge_new` inside `find_package` in CMakeLists.txt in your project
 and add ```#include <cv_bridge/cv_bridge.h>```  in your cpp file.
 
 
+Also, you need to delete the cv_bridge folder compiled from the cv_bridge_new
+```bash
+rm -rf /home/chentao/catkin_cv/devel/lib/python2.7/dist-packages/cv_bridge
+```
 
 
 
