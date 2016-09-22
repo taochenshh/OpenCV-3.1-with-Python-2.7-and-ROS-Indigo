@@ -123,6 +123,15 @@ rm -rf /home/chentao/catkin_cv/devel/lib/python2.7/dist-packages/cv_bridge
 ```
 
 
+### Note
+If you encounter errors like `segmentation fault (core dumped)` when working with OpenCV 3.1 and PCL 1.7, you can try switch the opencv to 2.4 version in the package's CMakeLists.
+That's to say,
+try
+```find_package(OpenCV 2.4 REQUIRED)```
+instead of 
+```find_package(OpenCV 3.1.0)```
+when you want to use OpenCV 2.4.
+Of course, if you use cv_bridge_new in OpenCV 3.1.0, you also need to change that to cv_bridge in ```find_package``` in CMakelists.
 
 
 
